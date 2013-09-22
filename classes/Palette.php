@@ -110,9 +110,7 @@ class Palette{
 
 			throw new PException('ImageProcessingException','An error occured while processing.',5);
 
-		}
-
-		print_r($this->histogram);exit();
+		}		
 
 	}
 
