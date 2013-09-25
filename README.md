@@ -33,4 +33,4 @@ $ php app.php ~/path/to/your/photo
 	<code>js</code>      		: Contains javascript codes in order to show popovers.<br/>
 
 ##Screenshot
-![View Screen Shot](https://github.com/s/PhpPalette/blob/master/assets/img/ScreenShot.png)
+![View Screen Shot](https://github.com/s/PhpPalette/blob/master/assets/img/ScreenShot.png?raw=true)
