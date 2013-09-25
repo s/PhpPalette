@@ -49,7 +49,44 @@
         <h1>
 <a name="phppalette" class="anchor" href="#phppalette"><span class="octicon octicon-link"></span></a>PhpPalette</h1>
 
-<p>A PHP Application that finds out most common colors of an image</p>
+<p>A PHP Application that finds out most common colors of an image.</p>
+
+<p>First, application clones the image to the project folder, then process the data.</p>
+
+<p>Second, new html file that uses <code>app.html</code> in the <code>outputs/templates</code> folder will be generated.</p>
+
+<h2>
+<a name="installation-and-run" class="anchor" href="#installation-and-run"><span class="octicon octicon-link"></span></a>Installation and Run</h2>
+
+<pre><code>$ git clone git://github.com/s/PhpPalette.git ~/PhpPalette
+$ cd ~/PhpPalette
+$ php app.php /path/to/your/photo
+</code></pre>
+
+<h2>
+<a name="skeletal" class="anchor" href="#skeletal"><span class="octicon octicon-link"></span></a>Skeletal</h2>
+
+<pre><code>&lt;h3&gt;Classes: (Core php files)&lt;/h3&gt;&lt;br/&gt;
+&lt;code&gt;Palette.php&lt;/code&gt;&lt;br/&gt;
+&lt;code&gt;Exception/&lt;/code&gt;&lt;br/&gt;
+
+&lt;h3&gt;Outputs:&lt;/h3&gt;&lt;br/&gt;
+&lt;code&gt;charts&lt;/code&gt;         : Contains generated views. Generated views will be in the this folder.&lt;br/&gt;
+&lt;code&gt;data&lt;/code&gt;           : Contains moved image that will be processed.&lt;br/&gt;
+&lt;code&gt;logs&lt;/code&gt;           : Contains log files that contains error logs.&lt;br/&gt;
+&lt;code&gt;templates&lt;/code&gt;      : Contains template files that sets up the skeletal.&lt;br/&gt;
+
+&lt;h3&gt;Assets:&lt;/h3&gt;&lt;br/&gt;
+&lt;code&gt;css&lt;/code&gt;            : Contains css files.&lt;br/&gt;
+&lt;code&gt;font&lt;/code&gt;           : Contains font awesome font files.&lt;br/&gt;
+&lt;code&gt;img&lt;/code&gt;            : Contains images.&lt;br/&gt;
+&lt;code&gt;js&lt;/code&gt;             : Contains javascript codes in order to show popovers.&lt;br/&gt;
+</code></pre>
+
+<h2>
+<a name="screenshot" class="anchor" href="#screenshot"><span class="octicon octicon-link"></span></a>Screenshot</h2>
+
+<p><img src="https://github.com/s/PhpPalette/blob/master/assets/img/ScreenShot.png?raw=true" alt="View Screen Shot"></p>
       </section>
 
       <footer>
