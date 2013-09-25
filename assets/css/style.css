@@ -41,8 +41,7 @@ body {
   background-color: #fff;
   cursor:pointer;
   border:2px dashed #cdcdcd;
-  height: auto;
-  width: auto;
+  height: auto;  
   position: relative;
 }
 .navbar-color{

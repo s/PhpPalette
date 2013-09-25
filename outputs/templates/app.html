@@ -5,23 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="shortcut icon" href="assets/ico/favicon.png">
+        <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
         <title>Find dominant colours in an image</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet">
 
         <!-- Custom styles for this template -->
-        <link href="assets/css/style.css" rel="stylesheet">
+        <link href="../../assets/css/style.css" rel="stylesheet">
 
-        <link href="assets/css/docs.css" rel="stylesheet">
+        <link href="../../assets/css/docs.css" rel="stylesheet">
 
-        <link href="assets/css/font-awesome.css" rel="stylesheet">
+        <link href="../../assets/css/font-awesome.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
-          <script src="assets/js/html5shiv.js"></script>
-          <script src="assets/js/respond.min.js"></script>
+          <script src="../../assets/js/html5shiv.js"></script>
+          <script src="../../assets/js/respond.min.js"></script>
         <![endif]-->
 
     </head>
@@ -58,10 +58,13 @@
                         <i class="icon-camera-retro icon-1x navbar-color"></i>&nbsp;Find colour palette of an image
                     </h1>
                 </div>        
-
-                <div class='upload-area uploadable span6' id='holder'>                    
-
-                        
+                <h4><i class="icon-file-text-alt navbar-color"></i> Image name: <span class='navbar-color'>{ImageName}</span></h4>
+                <div class='upload-area uploadable span6' id='holder' style='width:{UploadAreaWidth}px;'>
+                    <img
+                        src='{ImageSource}'
+                        alt='{ImageName}'
+                        width='{ImageWidth}'                        
+                    />
                 </div>
                 
             </div>
@@ -71,8 +74,8 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="assets/js/jquery.js"></script>
-        <script src="assets/js/bootstrap.js"></script>
+        <script src="../../assets/js/jquery.js"></script>
+        <script src="../../assets/js/bootstrap.js"></script>
         
         <script type="text/javascript">
             

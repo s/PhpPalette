@@ -14,17 +14,15 @@ ini_set("error_log", ROOT_DIR."/outputs/logs/app.log");
 
 date_default_timezone_set('Europe/Istanbul');
 
-error_reporting(0);
+error_reporting(E_ALL ^ E_NOTICE);
 
 $image_path = $argv[1];
 
-$image_is_locale = $argv[2];
-
 if (isset($image_path)) {
 	
-	$palette = new Palette($image_path,$image_is_locale);
+	$palette = new Palette($image_path,1);
 
-	$palette->draw();
+	$palette->process();
 
 }else{
 	throw new PException('InvalidInputException.',"Image file or image type is not specified.",1);

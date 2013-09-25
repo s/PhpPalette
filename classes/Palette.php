@@ -1,22 +1,75 @@
 <?php 
 
+/*
+* Palette.php
+* Said Ozcan
+* 25 September 2013 1:47PM
+*/
+
 require_once 'Exception/PException.php';
+
+
+/*
+* class Palette
+* this class handles saving image, processing image and rendering the output html
+*/
 
 class Palette{
 
+	// the original path of the incoming image
+
 	protected $original_path;
 
-	protected $image_is_locale = false;
-
-	protected $image_name;
-
-	protected $histogram = array();
-
-	protected $mime_type;
+	// copied path of incoming image in the project
 
 	protected $copied_image_path;
 
+	// if image is from local disk this will be true
+
+	protected $image_is_locale = false;
+
+	// holds just image name without path
+
+	protected $image_name;
+
+	// this array holds hexadecimal code of every pixel in the image.
+	
+	protected $histogram = array();
+
+	// holds mime type of incoming image
+
+	protected $mime_type;
+
+	// allowed image mime types to process
+
 	protected $allowed_mime_types = array('image/jpeg','image/png');
+
+	// base template file
+
+	protected $template_file;
+
+	// path of the charts which will be generated
+
+	protected $charts_path;
+
+	// dimensions of the incoming image
+
+	protected $image_dimensions = array();
+
+	// image default width is set to 400.
+
+	protected $image_default_width;
+	
+
+
+
+	/*
+	* method constructor
+	* this method sets up the requirements
+	* @param (string) original_path
+	* @param (string) image_is_locale
+	* @return void	
+	*/
 
 	public function __construct($original_path, $image_is_locale){
 
@@ -25,6 +78,14 @@ class Palette{
 		$this->original_path = $original_path;
 
 		$this->mime_type = mime_content_type($this->original_path);
+
+		$this->template_file = ROOT_DIR.'/outputs/templates/app.html';
+
+		$this->charts_path = ROOT_DIR.'/outputs/charts/';
+
+		$this->image_default_width = 400;
+
+
 
 		if ($this->image_is_locale) {
 			
@@ -42,12 +103,11 @@ class Palette{
 
 			$exploded_path = explode(DIRECTORY_SEPARATOR, $this->original_path);
 
-			$this->image_name = $exploded_path[sizeof($exploded_path)-1];
+			$this->image_name = uniqid().'-'.$exploded_path[sizeof($exploded_path)-1];
 
 			$this->copied_image_path = ROOT_DIR.'/outputs/data/'.$this->image_name;
 
-			try{				
-				
+			try{
 				copy($this->original_path,ROOT_DIR.'/outputs/data/'.$this->image_name);
 
 			}catch(Exception $exc){
@@ -59,8 +119,19 @@ class Palette{
 		}
 
 	}
+	
 
-	public function draw(){		
+
+
+
+	/*
+	* method process
+	* this method processes the image and triggers render() method
+	* @param void	
+	* @return void	
+	*/
+
+	public function process(){		
 		
 		try{
 			
@@ -71,9 +142,9 @@ class Palette{
 				$image = imagecreatefrompng($this->copied_image_path);
 			}
 			
-			$image_width = imagesx($image);
+			$this->image_dimensions[0] = $image_width = imagesx($image);
 
-			$image_height = imagesy($image);
+			$this->image_dimensions[1] = $image_height = imagesy($image);
 
 			$histogram = array();
 
@@ -105,14 +176,25 @@ class Palette{
 			
 			$this->get_hex_colors();
 			
-			
 		}catch(Exception $exc){
 
 			throw new PException('ImageProcessingException','An error occured while processing.',5);
 
-		}		
+		}
+
+		$this->render();
 
 	}
+	
+
+
+
+	/*
+	* method get_hex_colors
+	* this method sets the histogram with the hexadecimal color codes
+	* @param void
+	* @return void
+	*/
 
 	private function get_hex_colors(){
 
@@ -130,6 +212,17 @@ class Palette{
 		}
 
 	}
+
+
+
+
+	/*
+	* method rgb_to_hex
+	* this method finds the hexadecimal color code of given rgb color code
+	* @param void
+	* @return void
+	*/
+
 	private function rgb_to_hex($rgb) {
 	   
 	   $hex = "#";
@@ -142,6 +235,59 @@ class Palette{
 
 	   return $hex; // returns the hex value including the number sign (#)
 	}
-}
 
-?>
+
+
+
+	/*
+	* method render
+	* this method renders a new html file with the all of the data
+	* @param void
+	* @return void
+	*/
+
+	private function render(){
+
+		try{
+
+			$image_name = explode('-',$this->image_name);
+
+			$image_name = $image_name[1];
+			
+			$template = fopen($this->template_file,'r');
+			
+			$chart = fopen($this->charts_path.uniqid().'.html','w+');
+
+			$html = fread($template,filesize($this->template_file));
+
+			$replace_keys = array(
+							'{ImageName}',
+							'{ImageSource}',
+							'{ImageWidth}',
+							'{UploadAreaWidth}'
+						);
+
+			$image_width = $this->image_dimensions[0] > $this->image_default_width ? $this->image_default_width : $this->image_dimensions[0];
+
+			$replace_values = array(
+							$image_name,
+							$this->copied_image_path,
+							$image_width,
+							$image_width+5
+						);
+
+			$html = str_replace($replace_keys,$replace_values,$html);			
+
+			fwrite($chart, $html);
+
+			fclose($template);
+
+			fclose($chart);
+
+		}catch(Exception $exc){
+
+			throw new PException('TemplateRenderException','An error occured while rendering the template file.');
+		}
+
+	}
+}
