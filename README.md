@@ -12,7 +12,7 @@ Second, new html file that uses <code>app.html</code> in the <code>outputs/templ
 ```
 $ git clone git://github.com/s/PhpPalette.git ~/PhpPalette
 $ cd ~/PhpPalette
-$ php app.php ~/path/to/your/photo
+$ php app.php /path/to/your/photo
 ```
 
 ##Skeletal
