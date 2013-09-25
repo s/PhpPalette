@@ -24,7 +24,6 @@ body {
   background-color: #f5f5f5;
 }
 
-
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
@@ -43,6 +42,7 @@ body {
   border:2px dashed #cdcdcd;
   height: auto;  
   position: relative;
+  float: left;
 }
 .navbar-color{
     color:#563d7c;
@@ -99,4 +99,17 @@ body {
 }
 .upload-preview img{
     border:1px solid #000;
+}
+.right-palette{
+    float: left;
+    list-style:none;    
+}
+.right-palette li{
+    width: 120px;
+    height: 78.4px;
+    margin-top: 2px;
+    border: 1px solid #563d7c;
+}
+.popover{
+    margin-top: -6px;
 }

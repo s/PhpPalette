@@ -148,6 +148,7 @@ class Palette{
 
 			$histogram = array();
 
+
 			for ($i=0; $i < $image_width; $i++) { 
 				
 				for ($j=0; $j < $image_height ; $j++) { 
@@ -160,19 +161,11 @@ class Palette{
 
 			}
 
-			for ($i=0; $i < 5 ; $i++) { 
-				
-				$max_value = max($histogram);
-
-				$max_index_array = array_keys($histogram, $max_value);
-
-				$max_index = $max_index_array[0];
-
-				$this->histogram[$i] = $max_value;
-
-				unset($histogram[$max_index]);
-
-			}
+			arsort($histogram);
+			
+			$histogram = array_slice($histogram, 0,5,true);			
+			
+			$this->histogram = $histogram;
 			
 			$this->get_hex_colors();
 			
@@ -197,14 +190,14 @@ class Palette{
 	*/
 
 	private function get_hex_colors(){
-
+		
 		foreach($this->histogram as $idx => $val ){
 
-			$red = ($val >> 16) & 0xFF;
+			$red = ($idx >> 16) & 0xFF;
 
-			$green = ($val >> 8) & 0xFF;
+			$green = ($idx >> 8) & 0xFF;
 
-			$blue = $val & 0xFF;
+			$blue = $idx & 0xFF;
 			
 			$hexa = $this->rgb_to_hex(array($red,$green,$blue));
 			
@@ -274,9 +267,33 @@ class Palette{
 							$this->copied_image_path,
 							$image_width,
 							$image_width+5
-						);
+						);			
 
 			$html = str_replace($replace_keys,$replace_values,$html);			
+
+			preg_match("/<div class='Palette'>(.*?)<\/div>/s",$html, $colors);			
+
+			$replaced_colors = "";
+
+			$i = 1;
+
+			foreach($this->histogram as $key => $color){
+
+				$li = str_replace('{Color}',$color,$colors[1]);
+
+				$li = str_replace('{Content}',$color,$li);
+
+				$li = str_replace('{Count}',$i,$li);
+
+				$replaced_colors.= $li;
+
+				$i ++;
+
+			}
+
+			$replaced_colors_block = "<div class='Palette'>".$colors[1].'</div>';
+
+			$html = str_replace($replaced_colors_block, $replaced_colors, $html);
 
 			fwrite($chart, $html);
 
@@ -287,6 +304,7 @@ class Palette{
 		}catch(Exception $exc){
 
 			throw new PException('TemplateRenderException','An error occured while rendering the template file.');
+
 		}
 
 	}

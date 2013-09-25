@@ -13,11 +13,13 @@
         <link href="../../assets/css/bootstrap.css" rel="stylesheet">
 
         <!-- Custom styles for this template -->
-        <link href="../../assets/css/style.css" rel="stylesheet">
+        <link href="../../assets/css/app.css" rel="stylesheet">
 
         <link href="../../assets/css/docs.css" rel="stylesheet">
 
-        <link href="../../assets/css/font-awesome.css" rel="stylesheet">
+        <link href="../../assets/css/font-awesome.min.css" rel="stylesheet">
+
+        <link href="../../assets/css/font-awesome-ie7.min.css" rel="stylesheet">        
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="../../assets/js/html5shiv.js"></script>
@@ -59,12 +61,26 @@
                     </h1>
                 </div>        
                 <h4><i class="icon-file-text-alt navbar-color"></i> Image name: <span class='navbar-color'>{ImageName}</span></h4>
-                <div class='upload-area uploadable span6' id='holder' style='width:{UploadAreaWidth}px;'>
+                <div class='upload-area uploadable' id='holder' style='width:{UploadAreaWidth}px;'>
                     <img
                         src='{ImageSource}'
                         alt='{ImageName}'
                         width='{ImageWidth}'                        
-                    />
+                    />                    
+                </div>
+
+                <div class='pull-left'>
+                    <ul class='right-palette'>
+                        <div class='Palette'>
+                            <li 
+                                class='palette-color color-tooltip' 
+                                data-toggle="tooltip" 
+                                title="Color - {Count}"
+                                data-content='{Content}'
+                                style='background-color:{Color}'
+                            ></li>
+                        </div>
+                    </ul>
                 </div>
                 
             </div>
@@ -78,7 +94,13 @@
         <script src="../../assets/js/bootstrap.js"></script>
         
         <script type="text/javascript">
-            
+            $(function(){
+                $('.color-tooltip').popover({
+                    trigger:'manual',                    
+                });
+
+                $('.color-tooltip').popover('show');
+            });            
         </script> 
     </body>
 </html>
